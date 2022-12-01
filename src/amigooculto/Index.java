@@ -28,97 +28,98 @@ public class Index {
     public static void main(String[] args) {
         //Criar lista
         lista = new Participante [MAX_PARTICIPANTES];        
-        Scanner keyboard = new Scanner (System.in);     //para a entrada do menu
-        System.out.println("Sistema gerador de combinacoes para amigo oculto.");       
-        int userChoseParsed = 0;
-        while (userChoseParsed != MAX_MENU_OPCOES){ //opcao != 'Sair'
-            userChoseParsed = 0;
-            while (userChoseParsed < 1 || userChoseParsed > MAX_MENU_OPCOES ){
-                String userChose = "";
-                try{
-                    userChoseParsed = Integer.parseInt(userChose);
-                } catch (NumberFormatException exc){
+        try (Scanner keyboard = new Scanner (System.in)) {
+            System.out.println("Sistema gerador de combinacoes para amigo oculto.");       
+            int userChoseParsed = 0;
+            while (userChoseParsed != MAX_MENU_OPCOES){ //opcao != 'Sair'
                 userChoseParsed = 0;
-                }
-                // exibe participantes carregados
-                System.out.println("\n\n<Participantes carregados (" + 
-                        numParticipantes +")>:");
-                imprimirParticipantes(lista, numParticipantes); 
-                // exibe menu
-                System.out.println("MENU:");
-                System.out.println("1. Carregar participantes de "
-                        + "'entrada.txt'.");
-                // registrar quais condicoes estao aplicadas no momento 
-                System.out.print("2. (");
-                if(naoMeTirei) System.out.print("X");
-                else System.out.print(" ");
-                System.out.println(") Condicao de sorteio: "
-                        + "'Nao me tirei' (alternar).");
-                System.out.print("3. (");
-                if(quemEuTireiNaoMeTirou) System.out.print("X");
-                else System.out.print(" ");
-                System.out.println(") Condicao de sorteio: 'Quem eu tirei nao "
-                        + "me tirou' (alternar)."); 
-                System.out.print("4. (");
-                if(ciclico) System.out.print("X");
-                else System.out.print(" ");
-                System.out.println(") Condicao de sorteio: 'Ciclico' "
-                        + "(alternar)."); 
-                // -----------
-                System.out.println("5. Realizar sorteio.");
-                System.out.println("6. Gerar arquivos de saida.");
-                System.out.println("7. Sair.");
-
-                userChose = keyboard.next();
-                keyboard.nextLine();
-                System.out.println("");
-
-            // Catch the exception if the answer is not numeric.               
-                try{
-                    userChoseParsed = Integer.parseInt(userChose);
-                } catch (NumberFormatException exc){
+                while (userChoseParsed < 1 || userChoseParsed > MAX_MENU_OPCOES ){
+                    String userChose = "";
+                    try{
+                        userChoseParsed = Integer.parseInt(userChose);
+                    } catch (NumberFormatException exc){
                     userChoseParsed = 0;
-                }
-            }       
-            switch(userChoseParsed){
-                case 1:
-                    numParticipantes = LeitorDeArquivos.carregarDados(lista);
-                    System.out.println(numParticipantes + " participantes "
-                        + "carregados com sucesso.");
-                    break;
-                case 2:
-                    alternarNaoMeTirei();
-                    break;
-                case 3:
-                    alternarQuemEuTireiNaoMeTirou();
-                    break;
-                case 4:
-                    alternarCiclico();
-                    break;    
-                case 5:
-                    if (numParticipantes < 2) {
-                        System.out.println("Numero insuficiente de participantes"
-                                + " carreagdos para o programa");
+                    }
+                    // exibe participantes carregados
+                    System.out.println("\n\n<Participantes carregados (" + 
+                            numParticipantes +")>:");
+                    imprimirParticipantes(lista, numParticipantes); 
+                    // exibe menu
+                    System.out.println("MENU:");
+                    System.out.println("1. Carregar participantes de "
+                            + "'entrada.txt'.");
+                    // registrar quais condicoes estao aplicadas no momento 
+                    System.out.print("2. (");
+                    if(naoMeTirei) System.out.print("X");
+                    else System.out.print(" ");
+                    System.out.println(") Condicao de sorteio: "
+                            + "'Nao me tirei' (alternar).");
+                    System.out.print("3. (");
+                    if(quemEuTireiNaoMeTirou) System.out.print("X");
+                    else System.out.print(" ");
+                    System.out.println(") Condicao de sorteio: 'Quem eu tirei nao "
+                            + "me tirou' (alternar)."); 
+                    System.out.print("4. (");
+                    if(ciclico) System.out.print("X");
+                    else System.out.print(" ");
+                    System.out.println(") Condicao de sorteio: 'Ciclico' "
+                            + "(alternar)."); 
+                    // -----------
+                    System.out.println("5. Realizar sorteio.");
+                    System.out.println("6. Gerar arquivos de saida.");
+                    System.out.println("7. Sair.");
+
+                    userChose = keyboard.next();
+                    keyboard.nextLine();
+                    System.out.println("");
+
+                // Catch the exception if the answer is not numeric.               
+                    try{
+                        userChoseParsed = Integer.parseInt(userChose);
+                    } catch (NumberFormatException exc){
+                        userChoseParsed = 0;
+                    }
+                }       
+                switch(userChoseParsed){
+                    case 1:
+                        numParticipantes = LeitorDeArquivos.carregarDados(lista);
+                        System.out.println(numParticipantes + " participantes "
+                            + "carregados com sucesso.");
                         break;
-                    }
-                    int numSorteios = 1;
-                    sorteio(lista);
-                    while ((naoMeTirei == true && checarNaoMeTirei(lista) == 
-                            false) || (quemEuTireiNaoMeTirou == true && 
-                            checarQuemEuTireiNaoMeTirou(lista) == false) ||
-                            (ciclico == true && checarCiclico(lista) == false)){
-                        numSorteios++;
+                    case 2:
+                        alternarNaoMeTirei();
+                        break;
+                    case 3:
+                        alternarQuemEuTireiNaoMeTirou();
+                        break;
+                    case 4:
+                        alternarCiclico();
+                        break;    
+                    case 5:
+                        if (numParticipantes < 2) {
+                            System.out.println("Numero insuficiente de participantes"
+                                    + " carreagdos para o programa");
+                            break;
+                        }
+                        int numSorteios = 1;
                         sorteio(lista);
-                    }
-                    System.out.println(numSorteios + " sorteios realizados "
-                            + "ate um resultado valido.");
-                    break;
-                case 6:
-                    LeitorDeArquivos.gerarBlocoDeNotas(lista, naoMeTirei, quemEuTireiNaoMeTirou, ciclico);
-                    break;
-                default:
-                    
-            }        
+                        while ((naoMeTirei == true && checarNaoMeTirei(lista) == 
+                                false) || (quemEuTireiNaoMeTirou == true && 
+                                checarQuemEuTireiNaoMeTirou(lista) == false) ||
+                                (ciclico == true && checarCiclico(lista) == false)){
+                            numSorteios++;
+                            sorteio(lista);
+                        }
+                        System.out.println(numSorteios + " sorteios realizados "
+                                + "ate um resultado valido.");
+                        break;
+                    case 6:
+                        LeitorDeArquivos.gerarBlocoDeNotas(lista, naoMeTirei, quemEuTireiNaoMeTirou, ciclico);
+                        break;
+                    default:
+                        
+                }        
+            }
         }
         
     }

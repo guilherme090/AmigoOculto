@@ -25,13 +25,14 @@ public class LeitorDeArquivos {
         while (currentFile.hasNext()){
             String input = null;  //temporary input strings
             input = currentFile.nextLine();   //get the next line
-            Scanner pieces = new Scanner (input); //break it into pieces
-            pieces.useDelimiter("/");
-            while (pieces.hasNext()){ // cria novo participante
-                lista[numParticipantes] = new Participante();
-                lista[numParticipantes].setId(numParticipantes);
-                lista[numParticipantes].setName(pieces.next());
-                numParticipantes++;
+            try (Scanner pieces = new Scanner (input)) {
+                pieces.useDelimiter("/");
+                while (pieces.hasNext()){ // cria novo participante
+                    lista[numParticipantes] = new Participante();
+                    lista[numParticipantes].setId(numParticipantes);
+                    lista[numParticipantes].setName(pieces.next());
+                    numParticipantes++;
+                }
             }
         } 
         for (int i = numParticipantes; i < Index.MAX_PARTICIPANTES; i++){
